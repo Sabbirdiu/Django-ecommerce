@@ -5,7 +5,8 @@ def product_list(request, category_slug=None):
     category = category 
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
-
+# use an optional category_slug parameter to optionally filter products by a given category.
+optionally filter products by a given category
     if category_slug:
         category = get_object_or_404(Category,slug=category_slug)
         products = products.filter(category=category)
@@ -15,3 +16,10 @@ def product_list(request, category_slug=None):
         'products':products
     }
     return render(request, 'shop/product/list.html',context)
+# retrieve and display a single product
+def product_detail(request, id, slug):
+    product = get_object_or_404(Product,id=id,slug=slug,available=True)
+    context = {
+        'product':product
+    }
+    return render(request,'shop/product/detail.html',context)
